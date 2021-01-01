@@ -1,15 +1,19 @@
 package com.example.firestoreexample
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import timber.log.Timber
 
 class MainViewModel : ViewModel() {
 
-    var greet = ""
-    val repository = Repository()
+    private val repository = Repository()
 
+    var greet = ""
+    var greetList = MutableLiveData<List<Greet>>()
 
     fun loadBoard(){
-        repository.loadGreet()
+        greetList.postValue(repository.loadGreet())
+        Timber.d("Timberlist${greetList.value}")
     }
     fun sendGreet(){
         repository.sendGreet(greet)

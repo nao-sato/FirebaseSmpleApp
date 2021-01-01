@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.example.firestoreexample.databinding.ActivityMainBinding
 
 
@@ -21,7 +23,8 @@ class MainActivity : AppCompatActivity() {
         initBinding()
         initClick()
         initData()
-        // TODO: 2020/12/31 swipe 
+        // TODO: 2020/12/31 SwipeLayout
+        // TODO: 2021/01/01 Update
     }
 
     private  fun initBinding(){
@@ -30,18 +33,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData(){
-        viewModel.loadBoard()
-        binding.greetView.customAdapter.refresh(viewModel.repository.greetList)
+        loadAndShow()
     }
 
-    private fun initClick(){
-        binding.btUpdate.setOnClickListener{
-            viewModel.loadBoard()
-            binding.greetView.customAdapter.refresh(viewModel.repository.greetList)
+    private fun initClick() {
+        binding.apply {
+            btUpdate.setOnClickListener {
+                loadAndShow()
+            }
+            btSend.setOnClickListener {
+                viewModel.sendGreet()
+                binding.edGreet.setText("")
+            }
         }
-        binding.btSend.setOnClickListener{
-            viewModel.sendGreet()
-            binding.edGreet.setText("")
+    }
+
+    private fun loadAndShow(){
+        viewModel.apply {
+            loadBoard()
+            greetList.observe(this@MainActivity, Observer {
+                binding.greetView.customAdapter.refresh(it)
+            })
         }
     }
 }

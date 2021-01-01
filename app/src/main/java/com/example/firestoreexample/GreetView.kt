@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firestoreexample.databinding.GreetBinding
@@ -26,7 +27,7 @@ class GreetView:RecyclerView {
 class Adapter(private val context: Context):RecyclerView.Adapter<Adapter.ItemViewHolder>(){
     private var itemList = mutableListOf<Greet>()
 
-    fun refresh(list: List<Greet>){
+    fun refresh(list:List<Greet>){
         itemList.apply {
             clear()
             addAll(list)

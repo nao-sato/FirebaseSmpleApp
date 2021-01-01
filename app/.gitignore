@@ -110,3 +110,5 @@
       # fastlane
       fastlane/report.xml
       assetWizardSettings.xml
+
+      google-services.json
