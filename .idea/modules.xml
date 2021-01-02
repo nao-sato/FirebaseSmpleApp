@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FirestoreExample.iml" filepath="$PROJECT_DIR$/.idea/modules/FirestoreExample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FirestoreExample.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FirestoreExample.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.ide/modules/FirestoreExample.iml" filepath="$PROJECT_DIR$/.ide/modules/FirestoreExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.ide/modules/app/FirestoreExample.app.iml" filepath="$PROJECT_DIR$/.ide/modules/app/FirestoreExample.app.iml" />
     </modules>
   </component>
 </project>
