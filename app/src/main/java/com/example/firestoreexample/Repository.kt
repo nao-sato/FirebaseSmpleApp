@@ -16,7 +16,7 @@ class Repository {
                     if (sendResult.isSuccessful) {
                         loadGreet()
                     } else {
-                        Toast.makeText(GreetApplication.context, "送信できませんでした", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(GreetApplication.context, "送信できませんでした", Toast.LENGTH_LONG).show()
                     }
                 }
     }
@@ -29,7 +29,7 @@ class Repository {
                     data = loadResult.result?.toObjects(Greet::class.java) ?: emptyList()
                     Timber.d("Timberlist${data.size}")
                 } else {
-                    Toast.makeText(GreetApplication.context, "読み込みできませんでした", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(GreetApplication.context, "読み込みできませんでした", Toast.LENGTH_LONG).show()
                 }
             }
             return data

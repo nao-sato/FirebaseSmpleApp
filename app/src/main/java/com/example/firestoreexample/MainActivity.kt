@@ -1,10 +1,9 @@
 package com.example.firestoreexample
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.firestoreexample.databinding.ActivityMainBinding
 
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         initBinding()
         initClick()
         initData()
-        // TODO: 2020/12/31 SwipeLayout
+        // TODO: 2020/12/31 SwipeLayout from btUpdate
         // TODO: 2021/01/01 Update
     }
 
