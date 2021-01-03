@@ -20,18 +20,19 @@ class Repository {
                     }
                 }
     }
-        fun loadGreet():List<Greet> {
-            var data = listOf<Greet>()
-            FirebaseFirestore.getInstance().collection("Greets")
-            .get()
-            .addOnCompleteListener { loadResult ->
-                if (loadResult.isSuccessful){
-                    data = loadResult.result?.toObjects(Greet::class.java) ?: emptyList()
-                    Timber.d("Timberlist${data.size}")
-                } else {
-                    Toast.makeText(GreetApplication.context, "読み込みできませんでした", Toast.LENGTH_LONG).show()
-                }
+
+    fun loadGreet():List<Greet> {
+        var data = listOf<Greet>()
+        FirebaseFirestore.getInstance().collection("Greets")
+        .get()
+        .addOnCompleteListener { loadResult ->
+            if (loadResult.isSuccessful){
+                data = loadResult.result?.toObjects(Greet::class.java) ?: emptyList()
+                Timber.d("Timberlist${data.size}")
+            } else {
+                Toast.makeText(GreetApplication.context, "読み込みできませんでした", Toast.LENGTH_LONG).show()
             }
-            return data
         }
+        return data
+    }
 }

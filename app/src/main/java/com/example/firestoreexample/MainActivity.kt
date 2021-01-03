@@ -1,5 +1,6 @@
 package com.example.firestoreexample
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         initBinding()
         initClick()
         initData()
+        initEdit()
         // TODO: 2020/12/31 SwipeLayout from btUpdate
         // TODO: 2021/01/01 Update
     }
@@ -42,9 +44,13 @@ class MainActivity : AppCompatActivity() {
             }
             btSend.setOnClickListener {
                 viewModel.sendGreet()
-                binding.edGreet.setText("")
+                binding.setGreet.setText("")
             }
         }
+    }
+
+    private fun initEdit(){
+            launcherEditGreetFragment()
     }
 
     private fun loadAndShow(){
@@ -54,5 +60,13 @@ class MainActivity : AppCompatActivity() {
                 binding.greetView.customAdapter.refresh(it)
             })
         }
+    }
+
+    private fun launcherEditGreetFragment(){
+        viewModel.editGreet.observe(this, Observer {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container,EditGreetFragment.getData(it.id, it.greeting))
+                .commit()
+        })
     }
 }

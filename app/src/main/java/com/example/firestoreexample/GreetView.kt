@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firestoreexample.databinding.GreetBinding
@@ -25,6 +27,8 @@ class GreetView:RecyclerView {
 
 class Adapter(private val context: Context):RecyclerView.Adapter<Adapter.ItemViewHolder>(){
     private var itemList = mutableListOf<Greet>()
+    private val viewModel: MainViewModel by (context as ComponentActivity).viewModels()
+
 
     fun refresh(list:List<Greet>){
         itemList.apply {
@@ -40,8 +44,14 @@ class Adapter(private val context: Context):RecyclerView.Adapter<Adapter.ItemVie
         ItemViewHolder(GreetBinding.inflate(LayoutInflater.from(context),parent,false))
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = itemList[position]
-        holder.binding.greetItem = item
+        val data = itemList[position]
+        holder.binding.apply {
+            greetItem = data
+            editView.setOnClickListener{
+                viewModel.editGreet.postValue(data)
+            }
+        }
+
     }
 
 

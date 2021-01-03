@@ -10,6 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#4FFF5722"
@@ -46,7 +47,7 @@
                 android:src="@drawable/ic_baseline_update_24" />
 
             <EditText
-                android:id="@+id/ed_greet"
+                android:id="@+id/set_greet"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -58,9 +59,15 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:src="@drawable/ic_baseline_send_24" />
-
-
         </LinearLayout>
+
+        <fragment
+            android:name="com.example.firestoreexample.EditGreetFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/input" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

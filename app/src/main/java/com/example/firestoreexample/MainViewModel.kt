@@ -7,6 +7,7 @@ import timber.log.Timber
 class MainViewModel : ViewModel() {
 
     private val repository = Repository()
+    var editGreet = MutableLiveData<Greet>()
 
     var greet = ""
     var greetList = MutableLiveData<List<Greet>>()
