@@ -32,7 +32,12 @@ class Repository {
     suspend fun loadGreet(){
         DocRef.get().addOnCompleteListener { loadResult ->
             if (loadResult.isSuccessful){
-                greetList.postValue(loadResult.result?.toObjects(Greet::class.java) ?: emptyList())
+
+                val list = loadResult.result?.toObjects(Greet::class.java) ?: emptyList()
+                Timber.d("listSize:${list.size}")
+                Timber.d("list:$list")
+                greetList.postValue(list)
+
                 Timber.d("Timberfragment1:${greetList.value}")
             }
             else {
