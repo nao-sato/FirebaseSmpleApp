@@ -50,7 +50,6 @@ class Adapter(private val context: Context):RecyclerView.Adapter<Adapter.ItemVie
             greetItem = data
             editView.setOnClickListener{
                 viewModel.editGreet.postValue(data)
-                Timber.d("Timberfragment1")
             }
             Timber.d("Timberfragment:${editView}")
         }

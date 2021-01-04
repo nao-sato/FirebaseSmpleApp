@@ -16,17 +16,12 @@ class MainViewModel : ViewModel() {
     private val repository = Repository()
 
     var greet = ""
-    var greetList = MutableLiveData<List<Greet>>()
     var editGreet = MutableLiveData<Greet>()
 
     fun loadBoard(){
         CoroutineScope(IO).launch {
             repository.loadGreet()
-            withContext(Main){
-                greetList.postValue(repository.list)
-            }
         }
-        Timber.d("TimberlistV${greetList.value}")
     }
     fun sendGreet(){
         CoroutineScope(IO).launch {

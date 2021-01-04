@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         initBinding()
         initClick()
         initData()
-        initEdit()
+        initObserver()
         // TODO: 2020/12/31 SwipeLayout from btUpdate
         // TODO: 2021/01/01 Update
     }
@@ -35,13 +35,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData(){
-        loadAndShow()
+        viewModel.loadBoard()
     }
 
     private fun initClick() {
         binding.apply {
             btUpdate.setOnClickListener {
-                loadAndShow()
+                viewModel.loadBoard()
             }
             btSend.setOnClickListener {
                 viewModel.sendGreet()
@@ -50,27 +50,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initEdit(){
-            launcherEditGreetFragment()
-    }
+    private fun initObserver(){
 
-    private fun loadAndShow(){
-        viewModel.apply {
-            loadBoard()
-            greetList.observe(this@MainActivity, Observer {
-                binding.greetView.customAdapter.refresh(it)
-            })
-        }
-    }
+        Repository().greetList.observe(this@MainActivity, Observer {
+            binding.greetView.customAdapter.refresh(it)
+            Timber.d("Timberfragment2:${it.size}")
 
-    private fun launcherEditGreetFragment() {
-        viewModel.editGreet.observe(this, Observer {
+        })
+
+        viewModel.editGreet.observe(this@MainActivity, Observer {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.container, EditGreetFragment.getData(it))
                     .commit()
-            Timber.d("Timberfragment2")
-
         })
-        Timber.d("Timberfragment3")
     }
 }

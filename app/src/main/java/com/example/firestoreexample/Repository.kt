@@ -1,6 +1,7 @@
 package com.example.firestoreexample
 
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -11,7 +12,7 @@ import java.util.*
 class Repository {
 
     private val DocRef = FirebaseFirestore.getInstance().collection("Greets")
-    var list = listOf<Greet>()
+    var greetList = MutableLiveData<List<Greet>>()
 
     suspend fun sendGreet(g:String) {
         val greet = Greet()
@@ -31,8 +32,8 @@ class Repository {
     suspend fun loadGreet(){
         DocRef.get().addOnCompleteListener { loadResult ->
             if (loadResult.isSuccessful){
-                list = loadResult.result?.toObjects(Greet::class.java) ?: emptyList<Greet>()
-                Timber.d("TimberlistR${list.size}")
+                greetList.postValue(loadResult.result?.toObjects(Greet::class.java) ?: emptyList())
+                Timber.d("Timberfragment1:${greetList.value}")
             }
             else {
                 Toast.makeText(GreetApplication.context, "読み込みできませんでした", Toast.LENGTH_LONG).show()
