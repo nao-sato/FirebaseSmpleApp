@@ -1,13 +1,18 @@
 package com.example.firestoreexample
 
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
 class EditGreetViewModel : ViewModel() {
 
-    var dataId: Long? = 0
-    var dataGreeting: String? = null
+    private val repository = Repository()
+    var dataGreet:Greet? = null
 
     fun updateData(){
-
+        CoroutineScope(IO).launch {
+            repository.upData(dataGreet)
+        }
     }
 }

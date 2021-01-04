@@ -1,5 +1,6 @@
 package com.example.firestoreexample
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.firestoreexample.databinding.EditGreetFragmentBinding
 
-private const val KEY_GREETING = "key_greeting"
-private const val KEY_ID = "key_id"
+private const val KEY_GREET = "key_greet"
 
 class EditGreetFragment : Fragment() {
 
@@ -34,8 +34,7 @@ class EditGreetFragment : Fragment() {
 
     private fun initBundle(){
         arguments?.let {
-            viewModel.dataId = it.getLong(KEY_ID)
-            viewModel.dataGreeting = it.getString(KEY_GREETING)
+            viewModel.dataGreet = it.getParcelable(KEY_GREET)
         }
     }
 
@@ -43,24 +42,28 @@ class EditGreetFragment : Fragment() {
         binding.apply {
             btSend.setOnClickListener {
                 viewModel.updateData()
+                closeFragment()
+
             }
             btCancel.setOnClickListener{
-                childFragmentManager.beginTransaction()
-                        .remove(this@EditGreetFragment)
-                        .commit()
+               closeFragment()
             }
         }
     }
 
+    private fun closeFragment(){
+        activity?.supportFragmentManager?.beginTransaction()
+                ?.remove(this@EditGreetFragment)
+                ?.commit()
+    }
+
     companion object {
 
-        fun getData(id:Long,greeting:String) =
+        fun getData(greet: Greet) =
             EditGreetFragment().apply {
                 arguments = Bundle().apply {
-                putLong(KEY_ID,id)
-                putString(KEY_GREETING,greeting)
+                    putParcelable(KEY_GREET,greet)
             }
-
         }
     }
 

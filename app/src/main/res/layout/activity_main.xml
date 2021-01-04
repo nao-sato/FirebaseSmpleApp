@@ -31,7 +31,7 @@
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#7AF44336"
+            android:background="#FB8560"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -60,15 +60,5 @@
                 android:focusable="true"
                 android:src="@drawable/ic_baseline_send_24" />
         </LinearLayout>
-
-        <fragment
-            android:name="com.example.firestoreexample.EditGreetFragment"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/input" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

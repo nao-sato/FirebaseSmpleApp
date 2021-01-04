@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.firestoreexample.databinding.ActivityMainBinding
+import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
@@ -62,11 +63,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun launcherEditGreetFragment(){
+    private fun launcherEditGreetFragment() {
         viewModel.editGreet.observe(this, Observer {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container,EditGreetFragment.getData(it.id, it.greeting))
-                .commit()
+                    .replace(R.id.container, EditGreetFragment.getData(it))
+                    .commit()
+            Timber.d("Timberfragment2")
+
         })
+        Timber.d("Timberfragment3")
     }
 }

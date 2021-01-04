@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firestoreexample.databinding.GreetBinding
+import timber.log.Timber
 
 class GreetView:RecyclerView {
 
@@ -49,7 +50,9 @@ class Adapter(private val context: Context):RecyclerView.Adapter<Adapter.ItemVie
             greetItem = data
             editView.setOnClickListener{
                 viewModel.editGreet.postValue(data)
+                Timber.d("Timberfragment1")
             }
+            Timber.d("Timberfragment:${editView}")
         }
 
     }

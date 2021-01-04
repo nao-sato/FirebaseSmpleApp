@@ -2,37 +2,61 @@ package com.example.firestoreexample
 
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 
 class Repository {
 
-    fun sendGreet(g:String) {
+    private val DocRef = FirebaseFirestore.getInstance().collection("Greets")
+    var list = listOf<Greet>()
+
+    suspend fun sendGreet(g:String) {
         val greet = Greet()
         greet.greeting = g
-        FirebaseFirestore.getInstance().collection("Greets")
+        DocRef.document("${greet.id}").set(greet).addOnCompleteListener { sendResult ->
+                if (sendResult.isSuccessful) {
+                    CoroutineScope(IO).launch {
+                        loadGreet()
+                    }
+                } else {
+                    Toast.makeText(GreetApplication.context, "送信できませんでした", Toast.LENGTH_LONG).show()
+                }
+            }
+    }
+
+
+    suspend fun loadGreet(){
+        DocRef.get().addOnCompleteListener { loadResult ->
+            if (loadResult.isSuccessful){
+                list = loadResult.result?.toObjects(Greet::class.java) ?: emptyList<Greet>()
+                Timber.d("TimberlistR${list.size}")
+            }
+            else {
+                Toast.makeText(GreetApplication.context, "読み込みできませんでした", Toast.LENGTH_LONG).show()
+            }
+        }
+
+    }
+
+    suspend fun upData(greet: Greet?){
+        greet?.apply {
+            createAt = Date().toString()
+        }?.let {
+            FirebaseFirestore.getInstance().collection("Greets")
                 .document("${greet.id}")
-                .set(greet)
+                .set(it)
                 .addOnCompleteListener { sendResult ->
                     if (sendResult.isSuccessful) {
-                        loadGreet()
+                        CoroutineScope(IO).launch {
+                            loadGreet()
+                        }
                     } else {
                         Toast.makeText(GreetApplication.context, "送信できませんでした", Toast.LENGTH_LONG).show()
                     }
                 }
-    }
-
-    fun loadGreet():List<Greet> {
-        var data = listOf<Greet>()
-        FirebaseFirestore.getInstance().collection("Greets")
-        .get()
-        .addOnCompleteListener { loadResult ->
-            if (loadResult.isSuccessful){
-                data = loadResult.result?.toObjects(Greet::class.java) ?: emptyList()
-                Timber.d("Timberlist${data.size}")
-            } else {
-                Toast.makeText(GreetApplication.context, "読み込みできませんでした", Toast.LENGTH_LONG).show()
-            }
         }
-        return data
     }
 }
