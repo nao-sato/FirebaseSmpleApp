@@ -1,6 +1,5 @@
 package com.example.firestoreexample
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -52,16 +51,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun initObserver(){
 
-        Repository().greetList.observe(this@MainActivity, Observer {
-            binding.greetView.customAdapter.refresh(it)
-            Timber.d("Timberfragment2:${it.size}")
+        viewModel.apply {
 
-        })
+            greetList.observe(this@MainActivity, Observer {
+                binding.greetView.customAdapter.refresh(it)
+                Timber.d("TimberObserve:${it.size}")
+            })
 
-        viewModel.editGreet.observe(this@MainActivity, Observer {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, EditGreetFragment.getData(it))
-                    .commit()
-        })
+            editGreet.observe(this@MainActivity, Observer {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, EditGreetFragment.getData(it))
+                        .commit()
+            })
+        }
     }
 }

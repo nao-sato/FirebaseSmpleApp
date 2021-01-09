@@ -12,7 +12,7 @@ import java.util.*
 class Repository {
 
     private val DocRef = FirebaseFirestore.getInstance().collection("Greets")
-    var greetList = MutableLiveData<List<Greet>>()
+    var dataList = listOf<Greet>()
 
     suspend fun sendGreet(g:String) {
         val greet = Greet()
@@ -32,14 +32,13 @@ class Repository {
     suspend fun loadGreet(){
         DocRef.get().addOnCompleteListener { loadResult ->
             if (loadResult.isSuccessful){
-                greetList.postValue(loadResult.result?.toObjects(Greet::class.java) ?: emptyList())
-                Timber.d("Timberfragment1:${greetList.value}")
+               dataList = loadResult.result?.toObjects(Greet::class.java) ?: emptyList()
+                Timber.d("Timber:${dataList.size}")
             }
             else {
                 Toast.makeText(GreetApplication.context, "読み込みできませんでした", Toast.LENGTH_LONG).show()
             }
         }
-
     }
 
     suspend fun upData(greet: Greet?){
