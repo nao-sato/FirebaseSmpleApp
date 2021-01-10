@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity() {
         initClick()
         initData()
         initObserver()
-        // TODO: 2020/12/31 SwipeLayout from btUpdate
-        // TODO: 2021/01/01 Update
     }
 
     private  fun initBinding(){
@@ -34,13 +32,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData(){
-        viewModel.loadBoard()
+        viewModel.loadGreet()
     }
 
     private fun initClick() {
         binding.apply {
             btUpdate.setOnClickListener {
-                viewModel.loadBoard()
+                viewModel.loadGreet()
             }
             btSend.setOnClickListener {
                 viewModel.sendGreet()

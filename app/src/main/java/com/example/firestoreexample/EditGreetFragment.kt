@@ -1,20 +1,21 @@
 package com.example.firestoreexample
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.example.firestoreexample.databinding.EditGreetFragmentBinding
 
-private const val KEY_GREET = "key_greet"
+
+
 
 class EditGreetFragment : Fragment() {
-
-    private val viewModel: EditGreetViewModel by viewModels()
     lateinit var binding: EditGreetFragmentBinding
+    private val viewModel: MainViewModel by activityViewModels()
+    var dataGreet:Greet? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = EditGreetFragmentBinding.inflate(inflater,container,false)
@@ -29,21 +30,20 @@ class EditGreetFragment : Fragment() {
     }
 
     private fun initView(){
-        binding.view = viewModel
+        binding.view = this
     }
 
     private fun initBundle(){
         arguments?.let {
-            viewModel.dataGreet = it.getParcelable(KEY_GREET)
+             dataGreet = it.getParcelable(Companion.KEY_GREET)
         }
     }
 
     private fun initClick(){
         binding.apply {
             btSend.setOnClickListener {
-                viewModel.updateData()
+                dataGreet?.let { greet -> viewModel.upData(greet) }
                 closeFragment()
-
             }
             btCancel.setOnClickListener{
                closeFragment()
@@ -59,12 +59,13 @@ class EditGreetFragment : Fragment() {
 
     companion object {
 
+        private const val KEY_GREET = "key_greet"
+
         fun getData(greet: Greet) =
             EditGreetFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(KEY_GREET,greet)
+                    putParcelable(Companion.KEY_GREET,greet)
             }
         }
     }
-
 }
