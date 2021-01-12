@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.firestoreexample.Greet
 import com.example.firestoreexample.GreetApplication
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -43,7 +45,7 @@ class MainViewModel : ViewModel() {
 
     fun upData(greet: Greet){
        greet.apply {
-            createAt = Date().toString()
+            createAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"))
         }.let {
             FirebaseFirestore.getInstance().collection("Greets")
                     .document("${greet.id}")
