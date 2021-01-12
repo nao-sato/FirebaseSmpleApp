@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firestoreexample.databinding.GreetBinding
+import com.example.firestoreexample.ui.MainViewModel
 import timber.log.Timber
 
 class GreetView:RecyclerView {

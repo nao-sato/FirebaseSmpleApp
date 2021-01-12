@@ -6,7 +6,7 @@
     <data>
         <variable
             name="view"
-            type="com.example.firestoreexample.MainViewModel" />
+            type="com.example.firestoreexample.ui.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#4FFF5722"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
 
 
         <com.example.firestoreexample.GreetView

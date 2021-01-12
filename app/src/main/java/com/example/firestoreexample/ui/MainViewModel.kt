@@ -1,8 +1,10 @@
-package com.example.firestoreexample
+package com.example.firestoreexample.ui
 
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.firestoreexample.Greet
+import com.example.firestoreexample.GreetApplication
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 

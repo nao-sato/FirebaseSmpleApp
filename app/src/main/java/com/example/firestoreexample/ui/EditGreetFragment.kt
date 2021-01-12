@@ -1,4 +1,4 @@
-package com.example.firestoreexample
+package com.example.firestoreexample.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.firestoreexample.Greet
 import com.example.firestoreexample.databinding.EditGreetFragmentBinding
-
-
 
 
 class EditGreetFragment : Fragment() {
     lateinit var binding: EditGreetFragmentBinding
     private val viewModel: MainViewModel by activityViewModels()
-    var dataGreet:Greet? = null
+    var dataGreet: Greet? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +34,7 @@ class EditGreetFragment : Fragment() {
 
     private fun initBundle(){
         arguments?.let {
-             dataGreet = it.getParcelable(Companion.KEY_GREET)
+             dataGreet = it.getParcelable(KEY_GREET)
         }
     }
 
@@ -64,7 +63,7 @@ class EditGreetFragment : Fragment() {
         fun getData(greet: Greet) =
             EditGreetFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(Companion.KEY_GREET,greet)
+                    putParcelable(KEY_GREET,greet)
             }
         }
     }

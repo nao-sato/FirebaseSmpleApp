@@ -1,10 +1,11 @@
-package com.example.firestoreexample
+package com.example.firestoreexample.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.example.firestoreexample.R
 import com.example.firestoreexample.databinding.ActivityMainBinding
 import timber.log.Timber
 
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private  fun initBinding(){
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.view = viewModel
     }
 
