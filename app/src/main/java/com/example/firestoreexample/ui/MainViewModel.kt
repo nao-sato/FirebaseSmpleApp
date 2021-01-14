@@ -18,27 +18,22 @@ class MainViewModel : ViewModel() {
 
     var editGreet = MutableLiveData<Greet>()
     var greetList = MutableLiveData<List<Greet>>()
+    var isShownProgress = MutableLiveData<Boolean>()
     var greetText:String = ""
+
+    fun initData(){
+        showProgress()
+        loadGreet()
+    }
 
     fun sendGreet() {
         val greet = Greet()
         greet.greeting = greetText
         docRef.document("${greet.id}").set(greet).addOnCompleteListener { sendResult ->
             if (sendResult.isSuccessful) {
-                loadGreet()
+                initData()
             } else {
                 Toast.makeText(GreetApplication.context, "送信できませんでした。", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    fun loadGreet(){
-        docRef.get().addOnCompleteListener { loadResult ->
-            if (loadResult.isSuccessful){
-                greetList.postValue(loadResult.result?.toObjects(Greet::class.java) ?: emptyList())
-            }
-            else {
-                Toast.makeText(GreetApplication.context, "読み込めませんでした。", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -46,17 +41,32 @@ class MainViewModel : ViewModel() {
     fun upData(greet: Greet){
        greet.apply {
             createAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"))
-        }.let {
+       }.let {
             FirebaseFirestore.getInstance().collection("Greets")
                     .document("${greet.id}")
                     .set(it)
                     .addOnCompleteListener { sendResult ->
                         if (sendResult.isSuccessful) {
-                            loadGreet()
+                            initData()
                         } else {
                             Toast.makeText(GreetApplication.context, "送信できませんでした。", Toast.LENGTH_LONG).show()
                         }
                     }
+       }
+    }
+
+    private fun loadGreet(){
+        docRef.get().addOnCompleteListener { loadResult ->
+            if (loadResult.isSuccessful){
+                greetList.postValue(loadResult.result?.toObjects(Greet::class.java) ?: emptyList())
+                hideProgress()
+            }
+            else {
+                Toast.makeText(GreetApplication.context, "読み込めませんでした。", Toast.LENGTH_LONG).show()
+            }
         }
     }
+
+    private fun showProgress(){ isShownProgress.postValue(true) }
+    private fun hideProgress(){ isShownProgress.postValue(false) }
 }

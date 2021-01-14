@@ -1,19 +1,24 @@
 package com.example.firestoreexample.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.afollestad.materialdialogs.MaterialDialog
 import com.example.firestoreexample.R
 import com.example.firestoreexample.databinding.ActivityMainBinding
+import com.example.firestoreexample.databinding.ProgressBinding
+import com.google.android.material.dialog.MaterialDialogs
 import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding:ActivityMainBinding
-    private val viewModel : MainViewModel by viewModels()
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
+    private var progressDialog: MaterialDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         initBinding()
         initClick()
         initData()
-        initObserver()
+        initViewModel()
     }
 
     private  fun initBinding(){
@@ -33,14 +38,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData(){
-        viewModel.loadGreet()
+        viewModel.initData()
     }
 
     private fun initClick() {
+
         binding.apply {
+
             btUpdate.setOnClickListener {
-                viewModel.loadGreet()
+                viewModel.initData()
             }
+
             btSend.setOnClickListener {
                 viewModel.sendGreet()
                 binding.setGreet.setText("")
@@ -48,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initObserver(){
+    private fun initViewModel(){
 
         viewModel.apply {
 
@@ -62,6 +70,28 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.container, EditGreetFragment.getData(it))
                         .commit()
             })
+
+            isShownProgress.observe(this@MainActivity, Observer {
+                if (it) {
+                    showProgress()
+                }else{
+                    hideProgress()
+                }
+            })
+
         }
+    }
+
+    private fun showProgress(){
+        hideProgress()
+        progressDialog = MaterialDialog(this).show {
+            cancelable(false)
+            val binding = ProgressBinding.inflate(LayoutInflater.from(context),null,false)
+            setContentView(binding.root)
+        }
+    }
+    private fun hideProgress(){
+        progressDialog?.dismiss()
+        progressDialog = null
     }
 }
